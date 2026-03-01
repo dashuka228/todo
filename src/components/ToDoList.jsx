@@ -1,42 +1,37 @@
 import ToDoItem from "./ToDoItem";
 
-const ToDoList = () => {
-  const hasTasks = true;
+const ToDoList = (props) => {
+  const {
+    tasks = [],
+    onDeleteTaskButtonClick,
+    onTaskCompleteChange,
+    filteredTasks,
+  } = props;
+
+  const hasTasks = tasks.length > 0;
+  const isEmptyFilteredTasks = filteredTasks?.length === 0;
 
   if (!hasTasks) {
-    return <div className="todo__empty-message"></div>;
+    return <div className="todo__empty-message"> NO TASKS GO WORK</div>;
+  } else if (isEmptyFilteredTasks) {
+    return (
+      <div className="todo__empty-message">NOTHING FOR YOUR STUPID SEARCH</div>
+    );
   }
 
   return (
     <ul className="todo__list">
-      <ToDoItem title="Купить молоко" isDone={false} />
-      <li className="todo__item todo-item">
-        <input className="todo-item__checkbox" id="task-2" type="checkbox" />
-        <label className="todo-item__label" htmlFor="task-2">
-          Task 2
-        </label>
-        <button
-          className="todo-item__delete-button"
-          aria-label="Delete"
-          title="Delete"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15 5L5 15M5 5L15 15"
-              stroke="#757575"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </li>
+      {(filteredTasks ?? tasks).map((task) => (
+        <ToDoItem
+          title={task.title}
+          isDone={task.isDone}
+          className="todo__item"
+          id={task.id}
+          key={task.id}
+          onDeleteTaskButtonClick={onDeleteTaskButtonClick}
+          onTaskCompleteChange={onTaskCompleteChange}
+        />
+      ))}
     </ul>
   );
 };
