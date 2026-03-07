@@ -1,15 +1,18 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import ToDoItem from "./ToDoItem";
+import { TasksContext } from "../context/TasksContext";
 
-const ToDoList = (props) => {
-  const {
-    tasks = [],
-    onDeleteTaskButtonClick,
-    onTaskCompleteChange,
-    filteredTasks,
-    firstIncompleteTaskId,
-    firstIncompleteTaskRef,
-  } = props;
+const ToDoList = () => {
+  // const {
+  //   tasks = [],
+  //   onDeleteTaskButtonClick,
+  //   onTaskCompleteChange,
+  //   filteredTasks,
+  //   firstIncompleteTaskId,
+  //   firstIncompleteTaskRef,
+  // } = props;
+
+  const { tasks, filteredTasks } = useContext(TasksContext);
 
   const hasTasks = tasks.length > 0;
   const isEmptyFilteredTasks = filteredTasks?.length === 0;
@@ -26,16 +29,17 @@ const ToDoList = (props) => {
     <ul className="todo__list">
       {(filteredTasks ?? tasks).map((task) => (
         <ToDoItem
-          title={task.title}
-          isDone={task.isDone}
+          // title={task.title}
+          // isDone={task.isDone}
           className="todo__item"
-          id={task.id}
+          // id={task.id}
           key={task.id}
-          ref={
-            task.id === firstIncompleteTaskId ? firstIncompleteTaskRef : null
-          }
-          onDeleteTaskButtonClick={onDeleteTaskButtonClick}
-          onTaskCompleteChange={onTaskCompleteChange}
+          {...task}
+          // ref={
+          //   task.id === firstIncompleteTaskId ? firstIncompleteTaskRef : null
+          // }
+          // onDeleteTaskButtonClick={deleteTask}
+          // onTaskCompleteChange={toggleTaskComplete}
         />
       ))}
     </ul>
