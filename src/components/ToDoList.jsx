@@ -1,3 +1,4 @@
+import { memo } from "react";
 import ToDoItem from "./ToDoItem";
 
 const ToDoList = (props) => {
@@ -6,6 +7,8 @@ const ToDoList = (props) => {
     onDeleteTaskButtonClick,
     onTaskCompleteChange,
     filteredTasks,
+    firstIncompleteTaskId,
+    firstIncompleteTaskRef,
   } = props;
 
   const hasTasks = tasks.length > 0;
@@ -15,7 +18,7 @@ const ToDoList = (props) => {
     return <div className="todo__empty-message"> NO TASKS GO WORK</div>;
   } else if (isEmptyFilteredTasks) {
     return (
-      <div className="todo__empty-message">NOTHING FOR YOUR STUPID SEARCH</div>
+      <div className="todo__empty-message">WE HAVE NOTHING FOR YOU BITCH</div>
     );
   }
 
@@ -28,6 +31,9 @@ const ToDoList = (props) => {
           className="todo__item"
           id={task.id}
           key={task.id}
+          ref={
+            task.id === firstIncompleteTaskId ? firstIncompleteTaskRef : null
+          }
           onDeleteTaskButtonClick={onDeleteTaskButtonClick}
           onTaskCompleteChange={onTaskCompleteChange}
         />
@@ -36,4 +42,4 @@ const ToDoList = (props) => {
   );
 };
 
-export default ToDoList;
+export default memo(ToDoList);
