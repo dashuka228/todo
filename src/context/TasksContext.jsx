@@ -24,8 +24,6 @@ export const TasksProvider = (props) => {
   const { firstIncompleteTaskRef, firstIncompleteTaskId } =
     useIncompleteTaskScroll(tasks);
 
-  console.log(firstIncompleteTaskRef);
-
   return (
     <TasksContext.Provider
       value={{
